@@ -1,21 +1,23 @@
-package br.com.alunoonline.Api.servece;
+package br.com.alunoonline.Api.service;
 
 import br.com.alunoonline.Api.Enums.MatriculaAlunoStatusEnum;
+import br.com.alunoonline.Api.dtos.AtualizarNotasRequest;
 import br.com.alunoonline.Api.model.MatriculaAluno;
 import br.com.alunoonline.Api.repository.MatriculaAlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.swing.event.DocumentListener;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MatriculaAlunoServece implements Serializable {
+public class MatriculaAlunoService implements Serializable {
+
+    public static final double GRADE_AVG_TO_APROVE = 7.0;
     @Autowired
     MatriculaAlunoRepository matriculaAlunoRepository;
 
@@ -94,8 +96,35 @@ public class MatriculaAlunoServece implements Serializable {
 
 
     }
-
     public void deleteById(Long id){
         matriculaAlunoRepository.deleteById(id);
+    }
+
+    public void updateGrades(Long matriculaId, AtualizarNotasRequest atualizarNotasRequest){
+        MatriculaAluno matriculaAluno =
+                matriculaAlunoRepository.findById(matriculaId)
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Matricula não encontrada"));
+
+
+    }
+
+    public void updateStatusGrades(MatriculaAluno matriculaAluno, AtualizarNotasRequest atualizarNotasRequest){
+        if(atualizarNotasRequest.getNota1() != null){
+            matriculaAluno.setNota1(atualizarNotasRequest.getNota1());
+        }
+
+        if (atualizarNotasRequest.getNota2() != null){
+            matriculaAluno.setNota2(atualizarNotasRequest.getNota2());
+        }
+    }
+
+    public void updateStudentStatus(MatriculaAluno matriculaAluno) {
+       Double nota1 = matriculaAluno.getNota1();
+       Double nota2 = matriculaAluno.getNota2();
+
+       if (nota1 != null && nota2 != null){
+           Double avarage = (nota1 + nota2) / 2;
+           matriculaAluno.setStatus(avarage >= GRADE_AVG_TO_APROVE ? MatriculaAlunoStatusEnum.APROVADO: MatriculaAlunoStatusEnum.REPROVADO);
+       }
     }
 }

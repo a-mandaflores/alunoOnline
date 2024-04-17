@@ -1,4 +1,4 @@
-package br.com.alunoonline.Api.servece;
+package br.com.alunoonline.Api.service;
 
 import br.com.alunoonline.Api.model.Disciplina;
 import br.com.alunoonline.Api.repository.DisciplinaRepository;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class DisciplinaServece implements Serializable {
+public class DisciplinaService implements Serializable {
 
     @Autowired
     DisciplinaRepository disciplinaRepository;
@@ -43,8 +43,11 @@ public class DisciplinaServece implements Serializable {
 
         disciplinaRepository.save(displinaUpdate);
     }
-
     public void deleteById(Long id){
         disciplinaRepository.deleteById(id);
+    }
+
+    public List<Disciplina> findByProfessorId(Long id){
+        return disciplinaRepository.findByProfessorId(id);
     }
 }

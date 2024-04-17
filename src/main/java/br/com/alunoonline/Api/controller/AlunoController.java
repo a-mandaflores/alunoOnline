@@ -1,7 +1,7 @@
 package br.com.alunoonline.Api.controller;
 
 import br.com.alunoonline.Api.model.Aluno;
-import br.com.alunoonline.Api.servece.AlunoServece;
+import br.com.alunoonline.Api.service.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ import java.util.Optional;
 public class AlunoController {
 
     @Autowired
-    AlunoServece alunoServece;
+    AlunoService alunoServece;
 
 
     @PostMapping

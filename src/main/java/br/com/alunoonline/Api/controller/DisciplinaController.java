@@ -1,8 +1,7 @@
 package br.com.alunoonline.Api.controller;
 
-import br.com.alunoonline.Api.model.Aluno;
 import br.com.alunoonline.Api.model.Disciplina;
-import br.com.alunoonline.Api.servece.DisciplinaServece;
+import br.com.alunoonline.Api.service.DisciplinaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +14,7 @@ import java.util.Optional;
 public class DisciplinaController {
 
     @Autowired
-    DisciplinaServece disciplinaServece;
+    DisciplinaService disciplinaServece;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -45,6 +44,12 @@ public class DisciplinaController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id){
         disciplinaServece.deleteById(id);
+    }
+
+    @GetMapping("/professor/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Disciplina> findByProfessorId(@PathVariable Long id){
+        return disciplinaServece.findByProfessorId(id);
     }
 
 }

@@ -1,11 +1,10 @@
-package br.com.alunoonline.Api.servece;
+package br.com.alunoonline.Api.service;
 
 import br.com.alunoonline.Api.model.Aluno;
 import br.com.alunoonline.Api.repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.Serializable;
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AlunoServece implements Serializable {
+public class AlunoService implements Serializable {
 
     @Autowired
     AlunoRepository alunoRepository;
