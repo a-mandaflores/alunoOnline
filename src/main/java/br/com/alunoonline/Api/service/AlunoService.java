@@ -1,7 +1,11 @@
 package br.com.alunoonline.Api.service;
 
+import br.com.alunoonline.Api.Enums.CriarAlunoRequest;
 import br.com.alunoonline.Api.model.Aluno;
+import br.com.alunoonline.Api.model.Curso;
 import br.com.alunoonline.Api.repository.AlunoRepository;
+import br.com.alunoonline.Api.repository.CursoRepository;
+import br.com.alunoonline.Api.repository.FinanceiroAlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,8 +21,29 @@ public class AlunoService implements Serializable {
     @Autowired
     AlunoRepository alunoRepository;
 
-    public void create(Aluno aluno){
-        alunoRepository.save(aluno);
+    @Autowired
+    FinanceiroAlunoRepository financeiroAlunoRepository
+
+    @Autowired
+    CursoRepository cursoRepository
+
+    public void create(CriarAlunoRequest criarAlunoRequest){
+        Curso curso = cursoRepository.findById(criarAlunoRequest.getCourseId())
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        Aluno alunoSaved = alunoRepository.save(
+                new Aluno(
+                        null,
+                        criarAlunoRequest.getName(),
+                        criarAlunoRequest.getEmail(),
+                        curso
+                )
+        );
+
+
+
+
     }
 
     public List<Aluno> findAll(){

@@ -1,25 +1,27 @@
 package br.com.alunoonline.Api.model;
 
+import br.com.alunoonline.Api.Enums.CursoTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-public class Aluno {
-
-
+public class Curso implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String email;
 
-    @OneToOne
-    @JoinColumn(name = "curse_id")
-    private Curso couse;
+    private String name;
+
+    @Enumerated(EnumType.STRING)
+    private CursoTypeEnum type;
+
+    private BigDecimal mensalidade;
 }
