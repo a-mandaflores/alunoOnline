@@ -152,5 +152,7 @@ public class MatriculaAlunoService implements Serializable {
     };
 
 
-    
+    public HistoricoAlunoResponse getHistoricoFromAluno(Long alunoId){
+        matriculaAlunoRepository.findByAlunoId(alunoId);
+    }
 }
