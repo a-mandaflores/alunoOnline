@@ -1,5 +1,6 @@
 package br.com.alunoonline.Api.controller;
 
+import br.com.alunoonline.Api.dtos.AtualizarNotasRequest;
 import br.com.alunoonline.Api.model.MatriculaAluno;
 import br.com.alunoonline.Api.service.MatriculaAlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,4 +61,15 @@ public class MatriculaAlunoController {
     }
 
 
+    @PatchMapping("/update-grades/{matriculaAlunoId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateGrades(@RequestBody AtualizarNotasRequest atualizarNotasRequest, @PathVariable Long matriculaAlunoId){
+        matriculaAlunoServece.updateGrades(matriculaAlunoId, atualizarNotasRequest);
+    }
+
+    @PatchMapping("/update_status_to_break/{matriculaAlunoId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateStatusToBreack(@PathVariable Long matriculaAlunoId){
+        matriculaAlunoServece.upsateStatusToBreak(matriculaAlunoId);
+    }
 }

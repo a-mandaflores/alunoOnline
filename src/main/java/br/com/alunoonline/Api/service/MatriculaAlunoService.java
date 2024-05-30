@@ -2,6 +2,7 @@ package br.com.alunoonline.Api.service;
 
 import br.com.alunoonline.Api.Enums.MatriculaAlunoStatusEnum;
 import br.com.alunoonline.Api.dtos.AtualizarNotasRequest;
+import br.com.alunoonline.Api.dtos.HistoricoAlunoResponse;
 import br.com.alunoonline.Api.model.MatriculaAluno;
 import br.com.alunoonline.Api.repository.MatriculaAlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,6 +107,12 @@ public class MatriculaAlunoService implements Serializable {
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Matricula não encontrada"));
 
 
+        updateStatusGrades(matriculaAluno, atualizarNotasRequest);
+        updateStudentStatus(matriculaAluno);
+
+        matriculaAlunoRepository.save(matriculaAluno);
+
+
     }
 
     public void updateStatusGrades(MatriculaAluno matriculaAluno, AtualizarNotasRequest atualizarNotasRequest){
@@ -127,4 +134,23 @@ public class MatriculaAlunoService implements Serializable {
            matriculaAluno.setStatus(avarage >= GRADE_AVG_TO_APROVE ? MatriculaAlunoStatusEnum.APROVADO: MatriculaAlunoStatusEnum.REPROVADO);
        }
     }
+
+    public void upsateStatusToBreak(Long matriculaId){
+        MatriculaAluno matriculaAluno =
+            matriculaAlunoRepository.findById(matriculaId)
+                    .orElseThrow(() ->
+                            new ResponseStatusException(HttpStatus.NOT_FOUND, "Matirucla aluno"));
+
+        if (!MatriculaAlunoStatusEnum.MATRICULADO.equals(matriculaAluno.getStatus())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Só é possivel trncar se tiver matriculado");
+        }
+
+    }
+    public  void changeStatus(MatriculaAluno matriculaAluno, MatriculaAlunoStatusEnum matriculaAlunoStatusEnum){
+        matriculaAluno.setStatus(matriculaAlunoStatusEnum);
+        matriculaAlunoRepository.save(matriculaAluno);
+    };
+
+
+    
 }
