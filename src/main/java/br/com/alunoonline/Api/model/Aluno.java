@@ -19,7 +19,7 @@ public class Aluno {
     private String name;
     private String email;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "curse_id")
     private Curso couse;
 }

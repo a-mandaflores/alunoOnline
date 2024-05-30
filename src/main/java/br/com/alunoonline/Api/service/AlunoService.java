@@ -1,8 +1,10 @@
 package br.com.alunoonline.Api.service;
 
 import br.com.alunoonline.Api.Enums.CriarAlunoRequest;
+import br.com.alunoonline.Api.Enums.FinanceiroStatusEnum;
 import br.com.alunoonline.Api.model.Aluno;
 import br.com.alunoonline.Api.model.Curso;
+import br.com.alunoonline.Api.model.FinanceiroAluno;
 import br.com.alunoonline.Api.repository.AlunoRepository;
 import br.com.alunoonline.Api.repository.CursoRepository;
 import br.com.alunoonline.Api.repository.FinanceiroAlunoRepository;
@@ -22,10 +24,10 @@ public class AlunoService implements Serializable {
     AlunoRepository alunoRepository;
 
     @Autowired
-    FinanceiroAlunoRepository financeiroAlunoRepository
+    FinanceiroAlunoRepository financeiroAlunoRepository;
 
     @Autowired
-    CursoRepository cursoRepository
+    CursoRepository cursoRepository;
 
     public void create(CriarAlunoRequest criarAlunoRequest){
         Curso curso = cursoRepository.findById(criarAlunoRequest.getCourseId())
@@ -75,4 +77,15 @@ public class AlunoService implements Serializable {
         alunoRepository.deleteById(id);
     }
 
+    public void createFinanceiroInformation(Aluno aluno, CriarAlunoRequest criarAlunoRequest ){
+        FinanceiroAluno financeiroAluno = new FinanceiroAluno(
+                null,
+                aluno,
+                criarAlunoRequest.getDiscount(),
+                criarAlunoRequest.getDueDate(),
+                FinanceiroStatusEnum.EM_DIA
+        );
+
+        financeiroAlunoRepository.save(financeiroAluno);
+    }
 }
