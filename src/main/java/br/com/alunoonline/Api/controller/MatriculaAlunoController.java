@@ -1,6 +1,7 @@
 package br.com.alunoonline.Api.controller;
 
 import br.com.alunoonline.Api.dtos.AtualizarNotasRequest;
+import br.com.alunoonline.Api.dtos.HistoricoAlunoResponse;
 import br.com.alunoonline.Api.model.MatriculaAluno;
 import br.com.alunoonline.Api.service.MatriculaAlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,4 +73,11 @@ public class MatriculaAlunoController {
     public void updateStatusToBreack(@PathVariable Long matriculaAlunoId){
         matriculaAlunoServece.upsateStatusToBreak(matriculaAlunoId);
     }
+
+    @GetMapping("/academic-transcript/{alunoId}")
+    @ResponseStatus(HttpStatus.OK)
+    public HistoricoAlunoResponse getAcademicTranscript(@PathVariable Long alunoId){
+        return matriculaAlunoServece.getAcademicTranscript(alunoId);
+    }
+
 }

@@ -2,7 +2,9 @@ package br.com.alunoonline.Api.service;
 
 import br.com.alunoonline.Api.Enums.MatriculaAlunoStatusEnum;
 import br.com.alunoonline.Api.dtos.AtualizarNotasRequest;
+import br.com.alunoonline.Api.dtos.DisciplinaAlunoResponse;
 import br.com.alunoonline.Api.dtos.HistoricoAlunoResponse;
+import br.com.alunoonline.Api.model.Disciplina;
 import br.com.alunoonline.Api.model.MatriculaAluno;
 import br.com.alunoonline.Api.repository.MatriculaAlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.swing.event.DocumentListener;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -152,7 +155,38 @@ public class MatriculaAlunoService implements Serializable {
     };
 
 
-    public HistoricoAlunoResponse getHistoricoFromAluno(Long alunoId){
-        matriculaAlunoRepository.findByAlunoId(alunoId);
+    public HistoricoAlunoResponse getAcademicTranscript(Long alunoId){
+        List<MatriculaAluno> matriculaDoAluno= matriculaAlunoRepository.findByAlunoId((alunoId));
+
+        if (matriculaDoAluno.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Essa pessoa nao esta cadastrada");
+
+        }
+
+
+        HistoricoAlunoResponse hisotirco = new HistoricoAlunoResponse();
+
+        hisotirco.setNomeAluno(matriculaDoAluno.get(0).getAluno().getName());
+        hisotirco.setEmailAluno(matriculaDoAluno.get(0).getAluno().getEmail());
+
+        List<DisciplinaAlunoResponse> disciplinaList = new ArrayList<>();
+
+        for (MatriculaAluno matriculaAluno: matriculaDoAluno){
+            DisciplinaAlunoResponse disciplinaAlunoResponse = new DisciplinaAlunoResponse();
+            disciplinaAlunoResponse.setDisciplinaNome(matriculaAluno.getDisciplina().getName());
+            disciplinaAlunoResponse.setNomeProfessor(String.valueOf(matriculaAluno.getDisciplina().getProfessor()));
+
+            if (matriculaAluno.getNota1() != null && matriculaAluno.getNota2() != null){
+                    disciplinaAlunoResponse.setMedia((matriculaAluno.getNota1() + matriculaAluno.getNota2()) / 2.0);
+            }else{
+                disciplinaAlunoResponse.setMedia(null);
+            }
+
+            disciplinaAlunoResponse.setStatus(matriculaAluno.getStatus());
+            disciplinaList.add(disciplinaAlunoResponse);
+
+        }
+        return hisotirco;
+
     }
 }
