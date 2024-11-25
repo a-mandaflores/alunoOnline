@@ -66,7 +66,7 @@ public class FinanceiroService {
 
                     // Criar uma nova fatura para o aluno
                     Fatura fatura = new Fatura();
-                    fatura.setStudentFiancial(financeiroAluno);
+                    fatura.setStudentFinancial(financeiroAluno);
                     fatura.setDueDate(dueDateCurrentMonth.atTime(LocalTime.MIDNIGHT));
                     fatura.setCreatedAt(currentDate);
 
