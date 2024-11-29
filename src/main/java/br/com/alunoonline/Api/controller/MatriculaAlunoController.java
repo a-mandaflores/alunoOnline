@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/matricula-aluno")
+@RequestMapping("/matricula")
 public class MatriculaAlunoController {
 
     @Autowired

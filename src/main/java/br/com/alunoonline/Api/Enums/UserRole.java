@@ -2,9 +2,8 @@ package br.com.alunoonline.Api.Enums;
 
 public enum UserRole {
 
-    PROFESSOR("professor"),
-    ALUNO("aluno"),
-    ;
+    PROFESSOR("ROLE_PROFESSOR"),
+    ALUNO("ROLE_ALUNO");
 
     private String role;
 
