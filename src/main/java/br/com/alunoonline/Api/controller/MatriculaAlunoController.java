@@ -7,6 +7,7 @@ import br.com.alunoonline.Api.service.MatriculaAlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,8 +27,22 @@ public class MatriculaAlunoController {
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-    public List<MatriculaAluno> findAll(){
-        return matriculaAlunoServece.findAll();
+    public List<MatriculaAluno> findAll() {
+        List<MatriculaAluno> matriculas = matriculaAlunoServece.findAll();
+        if (matriculas.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhuma matrícula encontrada");
+        }
+        return matriculas;
+    }
+
+    @GetMapping("/aluno/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<MatriculaAluno> findByStudent(@PathVariable Long id) {
+        List<MatriculaAluno> matriculas = matriculaAlunoServece.findByStudent(id);
+        if (matriculas.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhuma disciplina encontrada");
+        }
+        return matriculas;
     }
 
     @GetMapping("/{id}")

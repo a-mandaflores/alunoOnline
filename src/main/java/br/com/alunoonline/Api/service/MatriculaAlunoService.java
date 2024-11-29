@@ -4,7 +4,6 @@ import br.com.alunoonline.Api.Enums.MatriculaAlunoStatusEnum;
 import br.com.alunoonline.Api.dtos.AtualizarNotasRequest;
 import br.com.alunoonline.Api.dtos.DisciplinaAlunoResponse;
 import br.com.alunoonline.Api.dtos.HistoricoAlunoResponse;
-import br.com.alunoonline.Api.model.Disciplina;
 import br.com.alunoonline.Api.model.MatriculaAluno;
 import br.com.alunoonline.Api.repository.MatriculaAlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.swing.event.DocumentListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +35,10 @@ public class MatriculaAlunoService implements Serializable {
 
     public Optional<MatriculaAluno> findById(Long id){
         return matriculaAlunoRepository.findById(id);
+    }
+
+    public List<MatriculaAluno> findByStudent(Long alunoId){
+        return matriculaAlunoRepository.findByAlunoId(alunoId);
     }
 
     public void update(Long id, MatriculaAluno matriculaAluno){
@@ -174,7 +176,6 @@ public class MatriculaAlunoService implements Serializable {
         for (MatriculaAluno matriculaAluno: matriculaDoAluno){
             DisciplinaAlunoResponse disciplinaAlunoResponse = new DisciplinaAlunoResponse();
             disciplinaAlunoResponse.setDisciplinaNome(matriculaAluno.getDisciplina().getName());
-            disciplinaAlunoResponse.setNomeProfessor(String.valueOf(matriculaAluno.getDisciplina().getProfessor()));
 
             if (matriculaAluno.getNota1() != null && matriculaAluno.getNota2() != null){
                     disciplinaAlunoResponse.setMedia((matriculaAluno.getNota1() + matriculaAluno.getNota2()) / 2.0);

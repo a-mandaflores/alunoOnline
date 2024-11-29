@@ -1,5 +1,6 @@
 package br.com.alunoonline.Api.controller;
 
+import br.com.alunoonline.Api.dtos.DisciplinaAlunoResponse;
 import br.com.alunoonline.Api.model.Disciplina;
 import br.com.alunoonline.Api.service.DisciplinaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class DisciplinaController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable Long id, @RequestBody Disciplina disciplina){
+    public void update(@PathVariable Long id, @RequestBody DisciplinaAlunoResponse disciplina){
         disciplinaServece.update(id, disciplina);
     }
 

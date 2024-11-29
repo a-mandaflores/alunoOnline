@@ -1,6 +1,6 @@
 package br.com.alunoonline.Api.service;
 
-import br.com.alunoonline.Api.Enums.CriarAlunoRequest;
+import br.com.alunoonline.Api.dtos.CriarAlunoRequest;
 import br.com.alunoonline.Api.Enums.FinanceiroStatusEnum;
 import br.com.alunoonline.Api.model.Aluno;
 import br.com.alunoonline.Api.model.Curso;
@@ -38,8 +38,7 @@ public class AlunoService implements Serializable {
                 new Aluno(
                         null,
                         criarAlunoRequest.getName(),
-                        criarAlunoRequest.getEmail(),
-                        curso
+                        criarAlunoRequest.getEmail()
                 )
         );
 

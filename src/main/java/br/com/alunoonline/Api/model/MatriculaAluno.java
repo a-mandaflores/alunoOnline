@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Data
+@Table(name = "matricula_aluno")
 public class MatriculaAluno {
 
     @Id
@@ -27,8 +28,7 @@ public class MatriculaAluno {
     @JoinColumn(name = "disciplina_id")
     private Disciplina disciplina;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private MatriculaAlunoStatusEnum status;
-
 
 }

@@ -1,6 +1,6 @@
 package br.com.alunoonline.Api.controller;
 
-import br.com.alunoonline.Api.Enums.CriarAlunoRequest;
+import br.com.alunoonline.Api.dtos.CriarAlunoRequest;
 import br.com.alunoonline.Api.model.Aluno;
 import br.com.alunoonline.Api.service.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package br.com.alunoonline.Api.Enums;
+package br.com.alunoonline.Api.dtos;
 
 import lombok.Data;
 

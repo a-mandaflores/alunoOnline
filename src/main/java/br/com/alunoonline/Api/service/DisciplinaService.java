@@ -1,5 +1,6 @@
 package br.com.alunoonline.Api.service;
 
+import br.com.alunoonline.Api.dtos.DisciplinaAlunoResponse;
 import br.com.alunoonline.Api.model.Disciplina;
 import br.com.alunoonline.Api.repository.DisciplinaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class DisciplinaService implements Serializable {
         return disciplinaRepository.findById(id);
     }
 
-    public void update(Long id, Disciplina disciplina){
+    public void update(Long id, DisciplinaAlunoResponse disciplina){
         Optional<Disciplina> displinaFromDb = findById(id);
 
         if (displinaFromDb.isEmpty()){
@@ -38,8 +39,8 @@ public class DisciplinaService implements Serializable {
 
         Disciplina displinaUpdate = displinaFromDb.get();
 
-        displinaUpdate.setName(disciplina.getName());
-        displinaUpdate.setProfessor(disciplina.getProfessor());
+        displinaUpdate.setName(disciplina.getDisciplinaNome());
+        displinaUpdate.setProfessor(disciplina.getNomeProfessor());
 
         disciplinaRepository.save(displinaUpdate);
     }
